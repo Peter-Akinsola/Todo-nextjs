@@ -1,13 +1,17 @@
-// 
+//
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Checkbox, Modal, notification } from "antd";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { Todo } from "../types";
 
-
-
+// Local Todo type to avoid importing from a non-module types file
+interface Todo {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
 const TodoList: React.FC = () => {
   const BASE_URL = "https://jsonplaceholder.typicode.com/todos";

@@ -1,14 +1,14 @@
-// 
+//
 
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Checkbox, Modal, notification } from "antd";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import Link from 'next/link'; // <-- ADD THIS
+import Link from "next/link"; // <-- ADD THIS
 // import { Todo } from "../types"; // Removed, interface is defined below
 
-import { generateTodosFromPrompt } from "@/actions/todoActions"; // <-- Import the AI function
+import { generateTodosFromPrompt } from "@/Actions/todoActions"; // <-- Import the AI function
 
 // Define your Todo interface (keep this if you are using TypeScript)
 interface Todo {
@@ -33,7 +33,8 @@ const TodoList: React.FC = () => {
 
   const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
-  const [isDeleteConfirmVisible, setIsDeleteConfirmVisible] = useState<boolean>(false);
+  const [isDeleteConfirmVisible, setIsDeleteConfirmVisible] =
+    useState<boolean>(false);
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
   const [deletingTodoId, setDeletingTodoId] = useState<number | null>(null);
 
@@ -139,7 +140,10 @@ const TodoList: React.FC = () => {
     setIsEditModalVisible(true);
   };
 
-  const handleUpdateTodo = async (values: { title: string; completed: boolean }) => {
+  const handleUpdateTodo = async (values: {
+    title: string;
+    completed: boolean;
+  }) => {
     if (!editingTodo) return;
     try {
       const updatedTodoData: Todo = {
@@ -237,11 +241,17 @@ const TodoList: React.FC = () => {
 
   return (
     <>
-      <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
         <h1>My AI-Powered To-Do List</h1>
 
         {/* 👇 NEW: AI Helper Input Section */}
-        <div style={{ margin: '20px 0', border: '1px solid #ccc', padding: '15px' }}>
+        <div
+          style={{
+            margin: "20px 0",
+            border: "1px solid #ccc",
+            padding: "15px",
+          }}
+        >
           <h2>🧠 AI To-Do Generator</h2>
           <input
             type="text"
@@ -249,14 +259,14 @@ const TodoList: React.FC = () => {
             onChange={(e) => setAiPrompt(e.target.value)}
             placeholder="e.g., things to buy for a weekend hike"
             disabled={loading}
-            style={{ width: 'calc(100% - 105px)', padding: '8px' }}
+            style={{ width: "calc(100% - 105px)", padding: "8px" }}
           />
           <button
             onClick={handleGenerateTodos}
             disabled={loading}
-            style={{ padding: '8px', marginLeft: '5px' }}
+            style={{ padding: "8px", marginLeft: "5px" }}
           >
-            {loading ? 'Generating...' : 'Generate'}
+            {loading ? "Generating..." : "Generate"}
           </button>
         </div>
         {/* 👆 END AI Helper Section */}
@@ -363,21 +373,26 @@ const TodoList: React.FC = () => {
         <Modal
           title="Add Todo"
           open={isAddModalVisible}
-          onOk={() => handleAddTodo({ title: '' })}
+          onOk={() => handleAddTodo({ title: "" })}
           onCancel={() => setIsAddModalVisible(false)}
         >
           <input
             type="text"
             placeholder="Enter todo title"
             onChange={(e) => handleAddTodo({ title: e.target.value })}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
           />
         </Modal>
 
         <Modal
           title="Edit Todo"
           open={isEditModalVisible}
-          onOk={() => handleUpdateTodo({ title: editingTodo?.title || '', completed: editingTodo?.completed || false })}
+          onOk={() =>
+            handleUpdateTodo({
+              title: editingTodo?.title || "",
+              completed: editingTodo?.completed || false,
+            })
+          }
           onCancel={() => setIsEditModalVisible(false)}
         >
           {editingTodo && (
@@ -385,12 +400,19 @@ const TodoList: React.FC = () => {
               <input
                 type="text"
                 value={editingTodo.title}
-                onChange={(e) => setEditingTodo({ ...editingTodo, title: e.target.value })}
-                style={{ width: '100%', marginBottom: '10px' }}
+                onChange={(e) =>
+                  setEditingTodo({ ...editingTodo, title: e.target.value })
+                }
+                style={{ width: "100%", marginBottom: "10px" }}
               />
               <Checkbox
                 checked={editingTodo.completed}
-                onChange={(e) => setEditingTodo({ ...editingTodo, completed: e.target.checked })}
+                onChange={(e) =>
+                  setEditingTodo({
+                    ...editingTodo,
+                    completed: e.target.checked,
+                  })
+                }
               >
                 Completed
               </Checkbox>
